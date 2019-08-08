@@ -82,22 +82,25 @@
 							<!-- / cart box -->
 							<!-- he box -->
 							<div class="aa-search-box">
-								<form action="">
-									<div>
-										<div class="row">
-											<div class="col-md-6" style="width: 200px;"></div>
-											<div class="col-md-6">
-
-												<input type="text" name="" id=""
-													placeholder="Search here ex. 'man' ">
-											</div>
-										</div>
-									</div>
-									<button type="submit">
-										<span class="fa fa-search"></span>
-									</button>
-								</form>
+                <form action="">
+<div>
+                  <div class="panel-body">
+					<div class="row cc-margin-bottom">
+                  <div class="col-md-6 col-sm-12">
+							<div class="form-select">
+								<select name="bookAuthor" class="form-control select2">
+									<option value="%">Categories</option>
+								</select>
 							</div>
+						</div>
+                  <div class="col-md-6 col-sm-12">
+                  
+                  <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
+                  </div></div>
+                  </div></div>
+                  <button type="submit"><span class="fa fa-search"></span></button>
+                </form>
+              </div>	
 							<!-- / search box -->
 						</div>
 					</div>
