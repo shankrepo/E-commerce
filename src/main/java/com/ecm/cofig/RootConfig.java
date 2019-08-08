@@ -1,4 +1,4 @@
-package com.ecm.cofig;
+ package com.ecm.cofig;
 
 import org.springframework.context.annotation.Configuration;
 

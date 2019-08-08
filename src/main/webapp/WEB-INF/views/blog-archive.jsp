@@ -147,10 +147,7 @@
                 <div>
                   <div class="row">
                   <div class="col-md-6">
-<select>
-<option>123</option>
-<option>123</option>
-</select>                  
+                  
                   </div>
                   <div class="col-md-6">
                   

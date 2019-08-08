@@ -15,10 +15,11 @@ public class AppUserImpl implements IAppUserService{
 	
 	@Override
 	public String registerUser(AppUser ap) {
-		ap.setEmail("shank@gmail.com");
-		ap.setName("name");
-		ap.setPassword("123");
+		
+		ap.setEmail(ap.getEmail());
+		ap.setPassword(ap.getPassword());
 		 ap = appUser.save(ap);
+		 //if registration got failed
 		 if(ap==null)
 			 return "Registration failed";
 		return "Registration successed";

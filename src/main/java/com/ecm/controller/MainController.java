@@ -12,9 +12,13 @@ public class MainController {
 	}
 
 	@GetMapping("/")
-	public String onBoardPage(Model model) {
-		model.addAttribute("msg", "welocme");
+	public String onBoardPage() {
 		return "index";
+	}
+	
+	@GetMapping("/contact")
+	public String contact() {
+		return "contact";
 	}
 }
 
