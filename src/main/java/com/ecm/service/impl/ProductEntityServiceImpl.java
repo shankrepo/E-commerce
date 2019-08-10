@@ -5,22 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ecm.dao.ProductRepository;
+import com.ecm.dao.ProductEntityRepository;
 import com.ecm.entity.ProductEntity;
-import com.ecm.service.ProductService;
+import com.ecm.service.ProductEntityService;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductEntityServiceImpl implements ProductEntityService{
 
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductEntityRepository productRepository;
 
 	@Override
 	public List<ProductEntity> findAll() {
 		return  productRepository.findAll();
 	}
 
-	public ProductServiceImpl() {
+	public ProductEntityServiceImpl() {
 		System.out.println("ProductServiceImpl.ProductServiceImpl()");
 	}
 

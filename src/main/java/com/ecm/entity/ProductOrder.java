@@ -7,26 +7,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.ecm.common.ProductTagsEnum;
+import com.ecm.common.OrderTypeEnum;
 
 import lombok.Data;
 
 @Data
 @Entity
-public class ProductEntity {
+public class ProductOrder {
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
-		private String productName;
-		private String productUrl;
 		@ManyToOne
-	    @JoinColumn(name ="product_category")
-		private ProductCategory productCategory;
-		private String productShortDesc;
-		private String productLongDesc;
-		private float actualPrice;
-		private float discountPrice;
-		private ProductTagsEnum tag ;
+	    @JoinColumn(name ="product_entity")
+		private ProductEntity productEntity;
+		@ManyToOne
+	    @JoinColumn(name ="product_price")
+		private ProductPrice productPrice;
+		private OrderTypeEnum orderTypeEnum;
+		private int quantity;
 		
 }

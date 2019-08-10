@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.ecm.entity.ProductEntity;
 
 @Repository
-public interface ProductRepository extends JpaRepository<ProductEntity, Serializable>, JpaSpecificationExecutor<ProductEntity> {
+public interface ProductEntityRepository extends JpaRepository<ProductEntity, Serializable>, JpaSpecificationExecutor<ProductEntity> {
 
 
 }

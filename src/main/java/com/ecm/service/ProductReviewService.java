@@ -5,12 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ecm.entity.ProductEntity;
+import com.ecm.entity.ProductReview;
 
 @Service
-public interface ProductService {
+public interface ProductReviewService {
 
-	List<ProductEntity> findAll();
-
-	ProductEntity findById(Long id);
+	List<ProductReview> FindByProductEntity(ProductEntity obj);
 
 }

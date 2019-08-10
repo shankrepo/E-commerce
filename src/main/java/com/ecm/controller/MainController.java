@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ecm.entity.ProductEntity;
-import com.ecm.service.ProductService;
+import com.ecm.service.ProductEntityService;
 
 @Controller
 public class MainController {
 	
 	@Autowired
-	private ProductService productService;
+	private ProductEntityService productService;
 	
 	public MainController() {
 		System.out.println("MainController.MainController()");
