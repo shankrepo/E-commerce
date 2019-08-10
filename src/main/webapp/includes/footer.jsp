@@ -121,7 +121,7 @@ pageEncoding="ISO-8859-1"%>
   </div>    
   <!-- jQuery library -->
   <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>  
   <!-- SmartMenus jQuery plugin -->
@@ -140,5 +140,6 @@ pageEncoding="ISO-8859-1"%>
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/nouislider.js"></script>
   <!-- Custom js -->
   <script src="${pageContext.request.contextPath}/js/custom.js"></script>
- 
-  
+<!-- Common js -->
+ <script src="${pageContext.request.contextPath}/js/common.js"></script> 
+

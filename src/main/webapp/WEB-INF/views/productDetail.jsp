@@ -9,16 +9,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title>Daily Shop | Home</title>
     
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
+    
 
 <%@include file="../../includes/header.jsp" %>
+<style type="text/css">
+.bar-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+
+.right {
+  text-align: right;
+}
+
+.middle {
+  margin-top:10px;
+  float: left;
+  width: 70%;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Three column layout */
+.side {
+  float: left;
+  width: 15%;
+  margin-top:10px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.bar-5 {width: 20%; height: 18px; background-color: #4CAF50;}
+.bar-4 {width: 30%; height: 18px; background-color: #2196F3;}
+.bar-3 {width: 10%; height: 18px; background-color: #00bcd4;}
+.bar-2 {width: 4%; height: 18px; background-color: #ff9800;}
+.bar-1 {width: 15%; height: 18px; background-color: #f44336;}
+
+@media (max-width: 400px) {
+  .side, .middle {
+    width: 100%;
+  }
+  .right {
+    display: none;
+  }
+}
+</style>
+ 
   </head>
   <body>  
-  <%@include file="../../includes/menu.jsp" %>
-  <!-- / menu -->  
+  <script type="text/javascript">
+function getPrice(size,actPric,disprix){
+	alert(size);
+	var dis = document.querySelector('#disprix');
+	dis.innerHTML = disprix;
+	$("input[id=selectedSize]").val(size);
+	/* var ssize = document.querySelector('#selectedSize');
+	ssize.innerHTML = selectedSize; */
+	var act = document.querySelector('#actPric');
+	act.innerHTML = actPric;
+	$("#onLoadPrice").hide();
+	 $("#updatePrice").show();
+	 $('#cartButton').prop('disabled', false);
+
+}
+
+$( document ).ready(function() {
+	$('#cartButton').prop('disabled', true);
+	 $("#updatePrice").hide();
+	 $("#onLoadPrice").show();
+});
  
-  <!-- catg header banner section -->
-   
-  <!-- / catg header banner section -->
+</script> 
+  <%@include file="../../includes/menu.jsp" %>
 
   <!-- product category -->
   <section id="aa-product-details">
@@ -33,7 +104,7 @@
                   <div class="aa-product-view-slider">                                
                     <div id="demo-1" class="simpleLens-gallery-container">
                       <div class="simpleLens-container">
-                        <div class="simpleLens-big-image-container"><a data-lens-image="../../img/view-slider/large/polo-shirt-1.png" class="simpleLens-lens-image"><img src="../../img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image"></a></div>
+                        <div class="simpleLens-big-image-container"><a data-lens-image="../img/view-slider/large/polo-shirt-1.png" class="simpleLens-lens-image"><img src="../img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image"></a></div>
                       </div>
                       <div class="simpleLens-thumbnails-container">
                           <c:forEach var="img" items="${productImgs}" varStatus="incr">
@@ -52,45 +123,56 @@
                   <div class="aa-product-view-content">
                     <h3>${productObj.productName}</h3>
                     <div class="aa-price-block">
+                    <div id="onLoadPrice">
                       <span class="aa-product-price fa fa-inr">${productObj.discountPrice}</span>   <span class="aa-product-price fa fa-inr"><del>${productObj.actualPrice}</del></span>
-                      <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
+                    </div>
+                    <div id="updatePrice">
+                      <span class="aa-product-price fa fa-inr">
+                      	<label id="disprix">0</label>
+                      </span>   
+                      <span class="aa-product-price fa fa-inr">
+                      <del id="actPric">
+                      </del>
+                      </span>
+                    </div>
+                      
+                      <p class="aa-product-avilability">Avilability: <span>${avilability}</span></p>
                     </div>
                     <p>${productObj.productShortDesc}</p>
-                    <h4>Size</h4>
+                    
+                    
+                      <form action="${pageContext.request.contextPath}/product/save/order" method="post">
+                      <input type="hidden" name="productId" value="${productObj.id}" />
+                      <input type="hidden" name="size" id="selectedSize" value="a" />
+                      
+                    <h4>Size:</h4>
                     <div class="aa-prod-view-size">
-                      <a href="#">S</a>
-                      <a href="#">M</a>
-                      <a href="#">L</a>
-                      <a href="#">XL</a>
-                    </div>
-                    <h4>Color</h4>
-                    <div class="aa-color-tag">
-                      <a href="#" class="aa-color-green"></a>
-                      <a href="#" class="aa-color-yellow"></a>
-                      <a href="#" class="aa-color-pink"></a>                      
-                      <a href="#" class="aa-color-black"></a>
-                      <a href="#" class="aa-color-white"></a>                      
+                    <c:forEach var="priceList" items="${priceList}" varStatus="incr">
+                    
+                    <input class="btn btn-primary" name="size" onclick="getPrice(this.value,${priceList.actualPrice},${priceList.discountPrice});" type="button" value="${priceList.size}" />
+                    </c:forEach>
+
                     </div>
                     <div class="aa-prod-quantity">
-                      <form action="">
-                        <select id="" name="">
-                          <option selected="1" value="0">1</option>
-                          <option value="1">2</option>
-                          <option value="2">3</option>
-                          <option value="3">4</option>
-                          <option value="4">5</option>
-                          <option value="5">6</option>
+                    Quantity:
+                        <select name="quantity">
+                          <option selected="1" value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
                         </select>
-                      </form>
                       <p class="aa-prod-category">
-                        Category: <a href="#">Polo T-Shirt</a>
+                        Category: ${productObj.productCategory.categoryName}
                       </p>
                     </div>
                     <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
+                    <input class="aa-add-to-cart-btn" type="submit" id="cartButton" name="actionType" value="Add To Cart" />
+                      <!-- <a class="aa-add-to-cart-btn" href="#">Add To Cart</a> -->
                       <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
                       <a class="aa-add-to-cart-btn" href="#">Customize</a>
                     </div>
+                      </form>
+                    
+                    
                   </div>
                 </div>
               </div>
@@ -108,7 +190,74 @@
                   </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">
-                   <h4>2 Reviews for T-Shirt</h4> 
+                   <h4>2 Reviews for ${productObj.productName}</h4> 
+                   <span class="heading">User Rating</span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<p>4.1 average based on 254 reviews.</p>
+<hr style="border:3px solid #f1f1f1">
+
+<div class="row">
+  <div class="side">
+    <div>5 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-5"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>10</div>
+  </div>
+  <div class="side">
+    <div>4 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-4"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>63</div>
+  </div>
+  <div class="side">
+    <div>3 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-3"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>15</div>
+  </div>
+  <div class="side">
+    <div>2 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-2"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>6</div>
+  </div>
+  <div class="side">
+    <div>1 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-1"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>20</div>
+  </div>
+</div>
+                   
                    <ul class="aa-review-nav">
                      <li>
                         <div class="media">
@@ -154,6 +303,7 @@
                    <h4>Add a review</h4>
                    <div class="aa-your-rating">
                      <p>Your Rating</p>
+                     
                      <a href="#"><span class="fa fa-star-o"></span></a>
                      <a href="#"><span class="fa fa-star-o"></span></a>
                      <a href="#"><span class="fa fa-star-o"></span></a>
@@ -529,52 +679,6 @@
     </div>
   </footer>
   <!-- / footer -->
-  <!-- Login Modal -->  
-  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">                      
-        <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4>Login or Register</h4>
-          <form class="aa-login-form" action="">
-            <label for="">Username or Email address<span>*</span></label>
-            <input type="text" placeholder="Username or email">
-            <label for="">Password<span>*</span></label>
-            <input type="password" placeholder="Password">
-            <button class="aa-browse-btn" type="submit">Login</button>
-            <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-            <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
-            <div class="aa-register-now">
-              Don't have an account?<a href="account.jsp">Register now!</a>
-            </div>
-          </form>
-        </div>                        
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
-
-
-    
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="../js/bootstrap.js"></script>  
-  <!-- SmartMenus jQuery plugin -->
-  <script type="text/javascript" src="../js/jquery.smartmenus.js"></script>
-  <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="../js/jquery.smartmenus.bootstrap.js"></script>  
-  <!-- To Slider JS -->
-  <script src="../js/sequence.js"></script>
-  <script src="../js/sequence-theme.modern-slide-in.js"></script>  
-  <!-- Product view slider -->
-  <script type="text/javascript" src="../js/jquery.simpleGallery.js"></script>
-  <script type="text/javascript" src="../js/jquery.simpleLens.js"></script>
-  <!-- slick slider -->
-  <script type="text/javascript" src="../js/slick.js"></script>
-  <!-- Price picker slider -->
-  <script type="text/javascript" src="../js/nouislider.js"></script>
-  <!-- Custom js -->
-  <script src="../js/custom.js"></script> 
-
   </body>
+  <%@include file="../../includes/footer.jsp" %>
 </html>
