@@ -1,12 +1,15 @@
 package com.ecm.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import java.io.Serializable;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.ecm.entity.AppUser;
 
 @Repository
-public interface AppUserRepo extends CrudRepository<AppUser,Long> {
+public interface AppUserRepo extends JpaRepository<AppUser, Serializable>, JpaSpecificationExecutor<AppUser> {
 	
 	
 }

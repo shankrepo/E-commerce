@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ecm.dao.AppUserRepo;
 import com.ecm.entity.AppUser;
+import com.ecm.entity.ProductEntity;
 import com.ecm.service.IAppUserService;
 
 @Service
@@ -23,6 +24,11 @@ public class AppUserImpl implements IAppUserService{
 		 if(ap==null)
 			 return "Registration failed";
 		return "Registration successed";
+	}
+
+	@Override
+	public AppUser findById(Long uid) {
+		return appUser.findById(uid).orElse(new AppUser());
 	}
 
 }

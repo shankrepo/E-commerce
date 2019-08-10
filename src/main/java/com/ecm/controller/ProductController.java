@@ -1,6 +1,7 @@
 package com.ecm.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,10 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ecm.common.OrderTypeEnum;
 import com.ecm.common.SizeEnum;
+import com.ecm.entity.AppUser;
 import com.ecm.entity.ProductEntity;
 import com.ecm.entity.ProductImage;
 import com.ecm.entity.ProductOrder;
 import com.ecm.entity.ProductPrice;
+import com.ecm.entity.ProductReview;
 import com.ecm.service.IAppUserService;
 import com.ecm.service.ProductEntityService;
 import com.ecm.service.ProductImageService;
@@ -61,7 +64,7 @@ public ProductController() {
 		List<ProductImage> imgsList = productImageService.findByProductEntity(obj);
 		List<ProductPrice> allPriceList = productPriceService.findByProductEntity(obj);
 		List<ProductPrice> priceList = allPriceList.stream().filter(qut -> qut.getQuantity() != 0).collect(Collectors.toList());
-		Long uid = 1;
+		Long uid = (long) 1;
 		AppUser user = appUserService.findById(uid);
 		List<ProductReview> reviewList = productReviewService.FindByProductEntity(obj);
 		

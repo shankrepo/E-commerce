@@ -7,5 +7,7 @@ import com.ecm.entity.AppUser;
 @Service
 public interface IAppUserService {
 
-	public String registerUser(AppUser ap); 
+	public String registerUser(AppUser ap);
+
+	public AppUser findById(Long uid); 
 }
