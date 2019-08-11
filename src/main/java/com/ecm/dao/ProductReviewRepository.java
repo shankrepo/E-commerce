@@ -13,6 +13,6 @@ import com.ecm.entity.ProductReview;
 @Repository
 public interface ProductReviewRepository extends JpaRepository<ProductReview, Serializable>, JpaSpecificationExecutor<ProductReview> {
 
-	List<ProductReview> FindByProductEntity(ProductEntity obj);
+	List<ProductReview> findByProductEntity(ProductEntity obj);
 
 }

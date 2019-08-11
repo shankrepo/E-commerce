@@ -10,8 +10,9 @@
     <title>Daily Shop | Home</title>
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
-    
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <%@include file="../../includes/header.jsp" %>
 <style type="text/css">
 .bar-container {
@@ -65,7 +66,17 @@
 </style>
  
   </head>
-  <body>  
+  <body> 
+  
+  <c:if test="${ not empty message}">
+   <script type="text/javascript">
+    <c:set var="mssg" value="${message}"/> 
+      var msg = '<c:out value="${mssg}"/>';
+      swal("",msg);   
+   </script>
+  </c:if>
+  
+   
   <script type="text/javascript">
 function getPrice(size,actPric,disprix){
 	alert(size);
@@ -79,12 +90,15 @@ function getPrice(size,actPric,disprix){
 	$("#onLoadPrice").hide();
 	 $("#updatePrice").show();
 	 $('#cartButton').prop('disabled', false);
+	 $('#Wishlist').prop('disabled', false);
+	 
 
 }
 
 $( document ).ready(function() {
 	$('#cartButton').prop('disabled', true);
-	 $("#updatePrice").hide();
+	$('#Wishlist').prop('disabled', true);
+	$("#updatePrice").hide();
 	 $("#onLoadPrice").show();
 });
  
@@ -166,8 +180,7 @@ $( document ).ready(function() {
                     </div>
                     <div class="aa-prod-view-bottom">
                     <input class="aa-add-to-cart-btn" type="submit" id="cartButton" name="actionType" value="Add To Cart" />
-                      <!-- <a class="aa-add-to-cart-btn" href="#">Add To Cart</a> -->
-                      <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
+                    <input class="aa-add-to-cart-btn" type="submit" id="Wishlist" name="actionType" value="Add To Wishlist" />
                       <a class="aa-add-to-cart-btn" href="#">Customize</a>
                     </div>
                       </form>
@@ -259,6 +272,7 @@ $( document ).ready(function() {
 </div>
                    
                    <ul class="aa-review-nav">
+                     <c:forEach var="review" items="${reviewList}" varStatus="incr">
                      <li>
                         <div class="media">
                           <div class="media-left">
@@ -267,64 +281,30 @@ $( document ).ready(function() {
                             </a>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
+                            <h4 class="media-heading"><strong>${review.user.name}</strong> - <span>${review.dateCreated}</span></h4>
                             <div class="aa-product-rating">
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star-o"></span>
+                              <input id="input-1" name="input-1" disabled="disabled" class="rating rating-loading" value="${review.rating}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <p>${review.reviewDesc}</p>
                           </div>
                         </div>
                       </li>
-                      <li>
-                        <div class="media">
-                          <div class="media-left">
-                            <a href="#">
-                              <img class="media-object" src="../img/testimonial-img-3.jpg" alt="girl image">
-                            </a>
-                          </div>
-                          <div class="media-body">
-                            <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
-                            <div class="aa-product-rating">
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star-o"></span>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                          </div>
-                        </div>
-                      </li>
+                      </c:forEach>
                    </ul>
+                   
+                   
                    <h4>Add a review</h4>
+                   <form action="${pageContext.request.contextPath}/product/save/review" method="post" class="aa-review-form">
+                   <input type="hidden" name="productId" value="${productObj.id}" />
                    <div class="aa-your-rating">
                      <p>Your Rating</p>
-                     
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
-                     <a href="#"><span class="fa fa-star-o"></span></a>
+                     <input id="input-1" name="rating" required="required" class="rating rating-loading" value="${review.rating}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
                    </div>
                    <!-- review form -->
-                   <form action="" class="aa-review-form">
                       <div class="form-group">
                         <label for="message">Your Review</label>
-                        <textarea class="form-control" rows="3" id="message"></textarea>
+                        <textarea class="form-control" rows="3" required="required" name="reviewDesc" id="message"></textarea>
                       </div>
-                      <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name">
-                      </div>  
-                      <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
-                      </div>
-
                       <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
                    </form>
                  </div>
@@ -566,119 +546,7 @@ $( document ).ready(function() {
   </section>
   <!-- / product category -->
 
-
-  <!-- Subscribe section -->
-  <section id="aa-subscribe">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-subscribe-area">
-            <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- / Subscribe section -->
-
-  <!-- footer -->  
-  <footer id="aa-footer">
-    <!-- footer bottom -->
-    <div class="aa-footer-top">
-     <div class="container">
-        <div class="row">
-        <div class="col-md-12">
-          <div class="aa-footer-top-area">
-            <div class="row">
-              <div class="col-md-3 col-sm-6">
-                <div class="aa-footer-widget">
-                  <h3>Main Menu</h3>
-                  <ul class="aa-footer-nav">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Our Services</a></li>
-                    <li><a href="#">Our Products</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                <div class="aa-footer-widget">
-                  <div class="aa-footer-widget">
-                    <h3>Knowledge Base</h3>
-                    <ul class="aa-footer-nav">
-                      <li><a href="#">Delivery</a></li>
-                      <li><a href="#">Returns</a></li>
-                      <li><a href="#">Services</a></li>
-                      <li><a href="#">Discount</a></li>
-                      <li><a href="#">Special Offer</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                <div class="aa-footer-widget">
-                  <div class="aa-footer-widget">
-                    <h3>Useful Links</h3>
-                    <ul class="aa-footer-nav">
-                      <li><a href="#">Site Map</a></li>
-                      <li><a href="#">Search</a></li>
-                      <li><a href="#">Advanced Search</a></li>
-                      <li><a href="#">Suppliers</a></li>
-                      <li><a href="#">FAQ</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                <div class="aa-footer-widget">
-                  <div class="aa-footer-widget">
-                    <h3>Contact Us</h3>
-                    <address>
-                      <p> 25 Astor Pl, NY 10003, USA</p>
-                      <p><span class="fa fa-phone"></span>+1 212-982-4589</p>
-                      <p><span class="fa fa-envelope"></span>dailyshop@gmail.com</p>
-                    </address>
-                    <div class="aa-footer-social">
-                      <a href="#"><span class="fa fa-facebook"></span></a>
-                      <a href="#"><span class="fa fa-twitter"></span></a>
-                      <a href="#"><span class="fa fa-google-plus"></span></a>
-                      <a href="#"><span class="fa fa-youtube"></span></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-     </div>
-    </div>
-    <!-- footer-bottom -->
-    <div class="aa-footer-bottom">
-      <div class="container">
-        <div class="row">
-        <div class="col-md-12">
-          <div class="aa-footer-bottom-area">
-            <p>Designed by <a href="http://www.markups.io/">MarkUps.io</a></p>
-            <div class="aa-footer-payment">
-              <span class="fa fa-cc-mastercard"></span>
-              <span class="fa fa-cc-visa"></span>
-              <span class="fa fa-paypal"></span>
-              <span class="fa fa-cc-discover"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </footer>
-  <!-- / footer -->
+ 
   </body>
   <%@include file="../../includes/footer.jsp" %>
 </html>

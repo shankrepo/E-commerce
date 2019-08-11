@@ -18,7 +18,7 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 
 	@Override
 	public List<ProductReview> FindByProductEntity(ProductEntity obj) {
-		return productImageRepository.FindByProductEntity(obj);
+		return productImageRepository.findByProductEntity(obj);
 	}
 	
 	

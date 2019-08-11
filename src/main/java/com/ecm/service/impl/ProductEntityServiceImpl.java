@@ -1,5 +1,6 @@
 package com.ecm.service.impl;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ecm.dao.ProductEntityRepository;
 import com.ecm.entity.ProductEntity;
+import com.ecm.entity.ProductReview;
 import com.ecm.service.ProductEntityService;
 
 @Service
@@ -28,5 +30,10 @@ public class ProductEntityServiceImpl implements ProductEntityService{
     public ProductEntity findById(Long id) {
         return productRepository.findById(id).orElse(new ProductEntity());
     }
+
+	@Override
+	public void save(ProductReview prdtreviw) {
+		productRepository.save(prdtreviw);
+	}
 	
 }

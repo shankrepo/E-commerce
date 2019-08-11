@@ -1,5 +1,7 @@
 package com.ecm.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,10 +21,12 @@ public class ProductReview {
 		@ManyToOne
 	    @JoinColumn(name ="product_entity")
 		private ProductEntity productEntity;
-		private int rating;
+		private float rating;
 		private String reviewDesc;
 		@ManyToOne
 	    @JoinColumn(name ="user")
 		private AppUser user;
+		private Date dateCreated;
+		
 		
 }

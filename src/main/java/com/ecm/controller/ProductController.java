@@ -64,8 +64,6 @@ public ProductController() {
 		List<ProductImage> imgsList = productImageService.findByProductEntity(obj);
 		List<ProductPrice> allPriceList = productPriceService.findByProductEntity(obj);
 		List<ProductPrice> priceList = allPriceList.stream().filter(qut -> qut.getQuantity() != 0).collect(Collectors.toList());
-		Long uid = (long) 1;
-		AppUser user = appUserService.findById(uid);
 		List<ProductReview> reviewList = productReviewService.FindByProductEntity(obj);
 		
 		if(priceList.isEmpty()) {
@@ -73,7 +71,7 @@ public ProductController() {
 		}else {
 			model.addAttribute("avilability", "In Stock");	
 		}
-		System.out.println("hello wordl"+priceList);
+		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("productObj", obj);
 		model.addAttribute("priceList", priceList);
 		model.addAttribute("productImgs", imgsList);
@@ -86,21 +84,48 @@ public ProductController() {
 		String quantity = request.getParameter("quantity");
 		String actionType = request.getParameter("actionType");
 		System.out.println("actionType"+actionType+"quantity"+quantity+"size"+size+"productId"+productId);
-		if(!StringUtils.isEmpty(productId) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(quantity) && actionType.contains("Cart")) {
+		if(!StringUtils.isEmpty(productId) && !StringUtils.isEmpty(size) && !StringUtils.isEmpty(quantity)) {
 			ProductEntity obj = productService.findById(Long.parseLong(productId));
 			ProductPrice prdtprice = productPriceService.findByProductEntityAndSize(obj,SizeEnum.valueOf(size));
 			ProductOrder prdtOrd = new ProductOrder();
-			prdtOrd.setOrderTypeEnum(OrderTypeEnum.Cart);
 			prdtOrd.setProductEntity(obj);
 			prdtOrd.setProductPrice(prdtprice);
 			prdtOrd.setQuantity(Integer.parseInt(quantity));
+			if(actionType.contains("Cart")) {
+				prdtOrd.setOrderTypeEnum(OrderTypeEnum.Cart);
+			}else {
+				prdtOrd.setOrderTypeEnum(OrderTypeEnum.WishList);
+			}
+			
 			productOrderService.save(prdtOrd);
-			redirectAttributes.addFlashAttribute("successMsg","Successfully added to cart.");
+			redirectAttributes.addFlashAttribute("message","Successfully added to cart.");
 		}else {
-			redirectAttributes.addFlashAttribute("successMsg","Please try again.");
+			redirectAttributes.addFlashAttribute("message","Please try again.");
 		}
 		
 		return "redirect:/product/"+productId;
 	}
 	
-}
+	@PostMapping(path ="/save/review")
+	public String saveProductReview(HttpServletRequest request,RedirectAttributes redirectAttributes){
+		String productId = request.getParameter("productId");
+		String rating = request.getParameter("rating");
+		String reviewDesc = request.getParameter("reviewDesc");
+		if(!StringUtils.isEmpty(productId) && !StringUtils.isEmpty(rating) && !StringUtils.isEmpty(reviewDesc)) {
+			Long uid = (long) 1;
+			AppUser user = appUserService.findById(uid);
+			ProductEntity prdtenty = productService.findById(Long.parseLong(productId));
+			ProductReview prdtreviw = new ProductReview();
+			prdtreviw.setProductEntity(prdtenty);
+			prdtreviw.setRating(Float.valueOf(rating));
+			prdtreviw.setReviewDesc(reviewDesc);
+			prdtreviw.setUser(user);
+			productService.save(prdtreviw);
+			System.out.println("productId"+productId+"rating"+rating+"reviewDesc"+reviewDesc);	
+			redirectAttributes.addFlashAttribute("message","Thanks for your review.");
+		}else {
+			redirectAttributes.addFlashAttribute("message","Please try again.");
+		}
+		return "redirect:/product/"+productId;
+	}
+	}
