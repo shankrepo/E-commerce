@@ -15,5 +15,4 @@ public interface ProductEntityRepository extends JpaRepository<ProductEntity, Se
 
 	void save(ProductReview prdtreviw);
 
-
 }

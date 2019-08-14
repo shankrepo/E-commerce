@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.ecm.common.OrderTypeEnum;
+import com.ecm.common.StatusEnum;
 
 import lombok.Data;
 
@@ -24,7 +25,11 @@ public class ProductOrder {
 		@ManyToOne
 	    @JoinColumn(name ="product_price")
 		private ProductPrice productPrice;
+		@ManyToOne
+	    @JoinColumn(name ="user")
+		private AppUser user;
 		private OrderTypeEnum orderTypeEnum;
+		private StatusEnum status;
 		private int quantity;
 		
 }

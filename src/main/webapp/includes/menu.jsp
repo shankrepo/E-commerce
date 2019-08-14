@@ -38,8 +38,9 @@
 							<div class="aa-header-top-right">
 								<ul class="aa-head-top-nav-right">
 									<li><a href="user/registerpage">Register</a></li>
-									<li class="hidden-xs"><a href="cart.jsp">My Cart</a></li>
-									<li class="hidden-xs"><a href="checkout.jsp">Checkout</a></li>
+									<li class="hidden-xs"><a href="${pageContext.request.contextPath}/cart/view">My Cart</a></li>
+									<li class="hidden-xs"><a href="${pageContext.request.contextPath}/cart/wishlist/view">Wish List</a></li>
+									<li class="hidden-xs"><a href="${pageContext.request.contextPath}/checkout/view">Checkout</a></li>
 									<li><a href="" data-toggle="modal"
 										data-target="#login-modal">Sign in</a></li>
 								</ul>
@@ -70,7 +71,7 @@
 							<!-- cart box -->
 							<div class="aa-cartbox">
 								<a class="aa-cart-link"
-									href="${pageContext.request.contextPath}/myaccount"> <span
+									href="${pageContext.request.contextPath}/cart/view"> <span
 									class="fa fa-shopping-basket"></span> <span
 									class="aa-cart-title">SHOPPING CART</span> <span
 									class="aa-cart-notify">2</span>

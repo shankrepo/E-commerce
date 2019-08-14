@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ecm.common.OrderTypeEnum;
 import com.ecm.common.SizeEnum;
+import com.ecm.common.StatusEnum;
 import com.ecm.entity.AppUser;
 import com.ecm.entity.ProductEntity;
 import com.ecm.entity.ProductImage;
@@ -65,12 +66,19 @@ public ProductController() {
 		List<ProductPrice> allPriceList = productPriceService.findByProductEntity(obj);
 		List<ProductPrice> priceList = allPriceList.stream().filter(qut -> qut.getQuantity() != 0).collect(Collectors.toList());
 		List<ProductReview> reviewList = productReviewService.FindByProductEntity(obj);
-		
 		if(priceList.isEmpty()) {
 			model.addAttribute("avilability", "Out Of Stock");
 		}else {
+			model.addAttribute("reviewCount", reviewList.size());
+			float totalReviews = 0;
+			for (ProductReview productReview : reviewList) {
+				totalReviews += productReview.getRating();
+			}
+			totalReviews = totalReviews/reviewList.size();
+			model.addAttribute("totalReviews", totalReviews);
 			model.addAttribute("avilability", "In Stock");	
 		}
+		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("productObj", obj);
 		model.addAttribute("priceList", priceList);
@@ -88,9 +96,13 @@ public ProductController() {
 			ProductEntity obj = productService.findById(Long.parseLong(productId));
 			ProductPrice prdtprice = productPriceService.findByProductEntityAndSize(obj,SizeEnum.valueOf(size));
 			ProductOrder prdtOrd = new ProductOrder();
+			Long uid = (long) 1;
+			AppUser user = appUserService.findById(uid);
+			prdtOrd.setUser(user);
 			prdtOrd.setProductEntity(obj);
 			prdtOrd.setProductPrice(prdtprice);
 			prdtOrd.setQuantity(Integer.parseInt(quantity));
+			prdtOrd.setStatus(StatusEnum.Active);
 			if(actionType.contains("Cart")) {
 				prdtOrd.setOrderTypeEnum(OrderTypeEnum.Cart);
 			}else {

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,7 +80,6 @@
    
   <script type="text/javascript">
 function getPrice(size,actPric,disprix){
-	alert(size);
 	var dis = document.querySelector('#disprix');
 	dis.innerHTML = disprix;
 	$("input[id=selectedSize]").val(size);
@@ -203,14 +203,9 @@ $( document ).ready(function() {
                   </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">
-                   <h4>2 Reviews for ${productObj.productName}</h4> 
-                   <span class="heading">User Rating</span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
-<p>4.1 average based on 254 reviews.</p>
+                   <h4>Reviews for ${productObj.productName}</h4> 
+                   <input id="input-1" name="input-1" disabled="disabled" class="rating rating-loading" value="${totalReviews}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
+<p>${totalReviews} average based on ${reviewCount} reviews.</p>
 <hr style="border:3px solid #f1f1f1">
 
 <div class="row">
@@ -281,7 +276,7 @@ $( document ).ready(function() {
                             </a>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading"><strong>${review.user.name}</strong> - <span>${review.dateCreated}</span></h4>
+                            <h4 class="media-heading"><strong>${review.user.name}</strong> - <span><fmt:formatDate type="both" value="${review.dateCreated}" /> </span></h4>
                             <div class="aa-product-rating">
                               <input id="input-1" name="input-1" disabled="disabled" class="rating rating-loading" value="${review.rating}" data-min="0" data-max="5" data-step="0.5" data-size="xs">
                             </div>
