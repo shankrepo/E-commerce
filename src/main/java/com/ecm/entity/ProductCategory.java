@@ -13,10 +13,6 @@ import lombok.Data;
 @Data
 @Entity
 public class ProductCategory {
-
-	ProductCategory(){
-		System.out.println("ProductCategory.ProductCategory()");
-	}
 	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)

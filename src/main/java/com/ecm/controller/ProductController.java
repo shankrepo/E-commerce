@@ -10,21 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ecm.common.GenderEnum;
 import com.ecm.common.OrderTypeEnum;
 import com.ecm.common.SizeEnum;
 import com.ecm.common.StatusEnum;
 import com.ecm.entity.AppUser;
+import com.ecm.entity.ProductCategory;
 import com.ecm.entity.ProductEntity;
 import com.ecm.entity.ProductImage;
 import com.ecm.entity.ProductOrder;
 import com.ecm.entity.ProductPrice;
 import com.ecm.entity.ProductReview;
 import com.ecm.service.IAppUserService;
+import com.ecm.service.ProductCategoryService;
 import com.ecm.service.ProductEntityService;
 import com.ecm.service.ProductImageService;
 import com.ecm.service.ProductOrderService;
@@ -58,6 +64,9 @@ public ProductController() {
 	
 	@Autowired
 	private IAppUserService appUserService;
+	
+	@Autowired
+	private ProductCategoryService productCategoryService;
 	
 	@GetMapping(path ="/{id}")
 	public String getProductDetails(@PathVariable Long id,Model model){
@@ -139,5 +148,20 @@ public ProductController() {
 			redirectAttributes.addFlashAttribute("message","Please try again.");
 		}
 		return "redirect:/product/"+productId;
+	}
+	
+	@GetMapping(path ="/add/category")
+	public String addProductCategory(Model model){
+		model.addAttribute("productCategory", new ProductCategory());
+		model.addAttribute("genderList", GenderEnum.values());
+		return "product-category";
+	}
+	
+	@RequestMapping(value = "/save/category", method = RequestMethod.POST)
+	public String saveProductCategory(@ModelAttribute("productCategory") ProductCategory productCategory){
+		System.out.println("ProductController.addProductCategory()");
+		System.out.println(productCategory.toString());
+		productCategoryService.save(productCategory);
+		return "redirect:/product/add/category";
 	}
 	}
