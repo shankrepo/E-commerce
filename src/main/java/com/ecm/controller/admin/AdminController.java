@@ -1,4 +1,4 @@
-package com.ecm.controller;
+package com.ecm.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

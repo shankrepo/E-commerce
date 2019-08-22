@@ -150,18 +150,4 @@ public ProductController() {
 		return "redirect:/product/"+productId;
 	}
 	
-	@GetMapping(path ="/add/category")
-	public String addProductCategory(Model model){
-		model.addAttribute("productCategory", new ProductCategory());
-		model.addAttribute("genderList", GenderEnum.values());
-		return "product-category";
-	}
-	
-	@RequestMapping(value = "/save/category", method = RequestMethod.POST)
-	public String saveProductCategory(@ModelAttribute("productCategory") ProductCategory productCategory){
-		System.out.println("ProductController.addProductCategory()");
-		System.out.println(productCategory.toString());
-		productCategoryService.save(productCategory);
-		return "redirect:/product/add/category";
-	}
 	}

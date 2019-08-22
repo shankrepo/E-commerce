@@ -101,8 +101,8 @@
 							<li><a href="${pageContext.request.contextPath}">Home</a></li>
 							<li><a href="#">Add Product<span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="${pageContext.request.contextPath}/product/add/category">Add Product Category</a></li>
-									<li><a href="#">Sports</a></li>
+									<li><a href="${pageContext.request.contextPath}/admin/add/category">Add Product Category</a></li>
+									<li><a href="${pageContext.request.contextPath}/admin/add/product">Add Product</a></li>
 									<li><a href="#">Formal</a></li>
 									<li><a href="#">Standard</a></li>
 									<li><a href="#">T-Shirts</a></li>
