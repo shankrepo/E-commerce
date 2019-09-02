@@ -6,8 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ecm.common.ProductTagsEnum;
+import com.ecm.common.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Data;
 
@@ -27,6 +32,9 @@ public class ProductEntity {
 		private String productLongDesc;
 		private float actualPrice;
 		private float discountPrice;
-		private ProductTagsEnum tag ;
+		private ProductTagsEnum tag;
+		private StatusEnum status;
 		
+		@Transient
+	    private CommonsMultipartFile documentFile;
 }

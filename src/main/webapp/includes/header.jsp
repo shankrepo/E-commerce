@@ -21,7 +21,8 @@
 
 <!-- Main style sheet -->
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+ 
 <!-- Google Font -->
 <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>

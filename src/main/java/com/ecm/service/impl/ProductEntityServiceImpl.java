@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ecm.dao.ProductEntityRepository;
 import com.ecm.entity.ProductEntity;
-import com.ecm.entity.ProductReview;
 import com.ecm.service.ProductEntityService;
 
 @Service
@@ -22,18 +21,14 @@ public class ProductEntityServiceImpl implements ProductEntityService{
 		return  productRepository.findAll();
 	}
 
-	public ProductEntityServiceImpl() {
-		System.out.println("ProductServiceImpl.ProductServiceImpl()");
-	}
-
     @Override
     public ProductEntity findById(Long id) {
         return productRepository.findById(id).orElse(new ProductEntity());
     }
 
 	@Override
-	public void save(ProductReview prdtreviw) {
+	public void save(ProductEntity prdtreviw) {
 		productRepository.save(prdtreviw);
 	}
-	
+
 }

@@ -20,6 +20,11 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 	public List<ProductReview> FindByProductEntity(ProductEntity obj) {
 		return productImageRepository.findByProductEntity(obj);
 	}
+
+	@Override
+	public void save(ProductReview prdtreviw) {
+		productImageRepository.save(prdtreviw);	
+	}
 	
 	
 }

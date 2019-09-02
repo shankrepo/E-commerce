@@ -10,20 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ecm.common.GenderEnum;
 import com.ecm.common.OrderTypeEnum;
 import com.ecm.common.SizeEnum;
 import com.ecm.common.StatusEnum;
 import com.ecm.entity.AppUser;
-import com.ecm.entity.ProductCategory;
 import com.ecm.entity.ProductEntity;
 import com.ecm.entity.ProductImage;
 import com.ecm.entity.ProductOrder;
@@ -41,12 +36,6 @@ import com.ecm.service.ProductReviewService;
 @RequestMapping(path ="/product")
 public class ProductController {
 	
-	
-public ProductController() {
-	// TODO Auto-generated constructor stub
-	System.out.println("ProductController.ProductController()");
-}
-
 	@Autowired
 	private ProductEntityService productService;
 	
@@ -141,7 +130,7 @@ public ProductController() {
 			prdtreviw.setRating(Float.valueOf(rating));
 			prdtreviw.setReviewDesc(reviewDesc);
 			prdtreviw.setUser(user);
-			productService.save(prdtreviw);
+			productReviewService.save(prdtreviw);
 			System.out.println("productId"+productId+"rating"+rating+"reviewDesc"+reviewDesc);	
 			redirectAttributes.addFlashAttribute("message","Thanks for your review.");
 		}else {

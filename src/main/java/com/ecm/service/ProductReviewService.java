@@ -12,4 +12,6 @@ public interface ProductReviewService {
 
 	List<ProductReview> FindByProductEntity(ProductEntity obj);
 
+	void save(ProductReview prdtreviw);
+
 }
